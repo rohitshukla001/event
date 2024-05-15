@@ -1,0 +1,91 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+	<!-- Navbar  -->
+	<nav class="bg-gray-800 py-4">
+		<div class="container mx-auto flex justify-between items-center px-4">
+
+			<img style="width: 20%;" alt="logo" src="/eventlogo.png">
+			<div>
+				<a href="/" class="text-white mr-4">Home</a> <a href="/showGridData"
+					class="text-white mr-4">Grid Data</a> <a href="/login"
+					class="text-white px-4 py-2 border border-white rounded">Sign
+					In</a> <a href="/signup"
+					class="text-white px-4 py-2 bg-gray-600 rounded">Sign Up</a>
+			</div>
+		</div>
+	</nav>
+	<!-- Navbar  -->
+	<div
+		class="h-100 bg-gray-50 flex flex-col justify-center  sm:px-6 lg:px-8 p-10">
+		<div class="sm:mx-auto sm:w-full sm:max-w-md">
+			<img class="mx-auto h-10 w-auto"
+				src="https://www.svgrepo.com/show/532192/list.svg" alt="Workflow">
+			<h2
+				class="mt-6 mb-5 text-center text-3xl leading-9 font-extrabold text-gray-900">
+				List of All Data<br> <a href="/signup"
+					class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-3 py-1 text-center me-2 mb-2 ">Add
+					Record</a>
+			</h2>
+		</div>
+		<div class="flex bg-gray-50 items-center justify-center p-12 ">
+			<table
+				class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 drop-shadow-lg">
+				<thead
+					class="text-xs text-gray-700 uppercase bg-green-100 dark:bg-green-700 dark:text-gray-400 ">
+					<tr>
+						<th scope="col" class="px-6 py-3">User Name</th>
+						<th scope="col" class="px-6 py-3">Full name</th>
+						<th scope="col" class="px-6 py-3">Mobile</th>
+						<th scope="col" class="px-6 py-3">Email</th>
+						<th scope="col" class="px-6 py-3">D.O.B</th>
+						<th scope="col" class="px-6 py-3">User Type</th>
+						<th scope="col" class="px-6 py-3">Address</th>
+
+						<th scope="col" class="px-12 py-3">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="comingListData:${showdatalist}"
+						class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+						<td class="px-6 py-4" th:text="${comingListData.username}"></td>
+						<td
+							class="limited-text px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+							th:text="${comingListData.name}"></td>
+						<td class="limited-text" th:text="${comingListData.mobile}"></td>
+						<td class="limited-text" th:text="${comingListData.email}"></td>
+						<td th:text="${comingListData.dob}"></td>
+						<td class="px-6 py-4" th:text="${comingListData.usertype}"></td>
+						<td class="limited-text px-6 py-4"
+							th:text="${comingListData.address}"></td>
+						<td class="px-6 py-4"><a
+							th:href="@{edit/{id}(id=${comingListData.id})}"
+							class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-3 py-1 text-center me-2 mb-2">Edit</a>
+							<a th:href="@{delete/{id}(id=${comingListData.id})}"
+							class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-3 py-1 text-center me-2 mb-2">Delete</a>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			var elements = document.querySelectorAll(".limited-text");
+			elements.forEach(function(element) {
+				var text = element.textContent;
+				var limit = 5; // Set your desired word limit here
+				var words = text.split(" ");
+				if (words.length > limit) {
+					var newText = words.slice(0, limit).join(" ") + " ...";
+					element.textContent = newText;
+				}
+			});
+		});
+	</script>
+</body>
+</html>
